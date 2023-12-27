@@ -56,7 +56,7 @@ router.get("/:pokemonId", function (req, res, next) {
   try {
     const db = JSON.parse(fs.readFileSync("db.json"));
     const { pokemons, evolutions } = db;
-    if (params.pokemonId <= 0 && params.pokemonId > pokemons.length) {
+    if (params.pokemonId <= 0 || params.pokemonId > pokemons.length) {
       const exception = new Error(`Please provide correct Pokemon ID`);
       exception.statusCode = 401;
       throw exception;
@@ -108,7 +108,7 @@ router.post("/", (req, res, next) => {
   let db = JSON.parse(fs.readFileSync("db.json"));
   console.log(body);
   try {
-    if (!body.name && !body.id && !body.types) {
+    if (!body.name || !body.id || !body.types) {
       const exception = new Error(`Missing required data.`);
       exception.statusCode = 401;
       throw exception;
@@ -127,7 +127,7 @@ router.post("/", (req, res, next) => {
     });
     db.pokemons.forEach((pokemon) => {
       if (
-        pokemon.id === parseInt(body.id) &&
+        pokemon.id === parseInt(body.id) ||
         pokemon.name === body.name.toLowerCase()
       ) {
         const exception = new Error("The Pokémon already exists.");

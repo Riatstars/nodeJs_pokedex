@@ -148,7 +148,6 @@ router.post("/", (req, res, next) => {
       success: true,
       data: newPokemon,
     };
-    console.log(response);
     res.status(200).send(response);
   } catch (error) {
     next(error);

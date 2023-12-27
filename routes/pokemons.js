@@ -126,7 +126,10 @@ router.post("/", (req, res, next) => {
       }
     });
     db.pokemons.forEach((pokemon) => {
-      if (pokemon.id === parseInt(body.id) && pokemon.name === body.name) {
+      if (
+        pokemon.id === parseInt(body.id) &&
+        pokemon.name === body.name.toLowerCase()
+      ) {
         const exception = new Error("The Pokémon already exists.");
         exception.statusCode = 401;
         throw exception;
@@ -135,7 +138,7 @@ router.post("/", (req, res, next) => {
 
     const newPokemon = {
       id: parseInt(body.id),
-      name: body.name,
+      name: body.name.toLowerCase(),
       types: body.types,
       url: body.url ? body.url : "",
     };

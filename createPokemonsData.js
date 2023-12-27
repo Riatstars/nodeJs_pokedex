@@ -1,7 +1,7 @@
 const fs = require("fs");
 const csv = require("csvtojson");
 require("dotenv").config();
-const mainUrl = process.env.MAIN_URL;
+const mainUrl = process.env.MAIN_URL || "https://pokedex-api-fx8z.onrender.com";
 
 const createPokemonsData = async () => {
   let newData = await csv().fromFile("resources/pokemon.csv");

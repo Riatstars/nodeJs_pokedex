@@ -5,7 +5,6 @@ var fs = require("fs");
 /* GET home page. */
 router.get("/", function (req, res, next) {
   const { body, params, url, query } = req;
-  console.log({ body, params, url, query });
   //input validation
   const allowedFilter = ["search", "type", "page", "limit"];
   try {
@@ -27,7 +26,6 @@ router.get("/", function (req, res, next) {
     let db = JSON.parse(fs.readFileSync("db.json", "utf-8"));
     const { pokemons } = db;
 
-    console.log(filterKeys, filterQuery);
     let result = [];
     if (type) {
       result = pokemons.filter((pokemon) => {
@@ -52,7 +50,7 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/:pokemonId", function (req, res, next) {
-  const { body, params, url } = req;
+  const { params } = req;
   try {
     const db = JSON.parse(fs.readFileSync("db.json"));
     const { pokemons, evolutions } = db;
@@ -106,7 +104,6 @@ router.post("/", (req, res, next) => {
   const { body, params, url, query } = req;
   //input validation
   let db = JSON.parse(fs.readFileSync("db.json"));
-  console.log(body);
   try {
     if (!body.name || !body.id || !body.types) {
       const exception = new Error(`Missing required data.`);
